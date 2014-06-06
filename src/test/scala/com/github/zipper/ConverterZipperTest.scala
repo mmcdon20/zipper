@@ -45,5 +45,32 @@ class ConverterZipperTest extends Specification with ZipperData {
       zip.getEntry("dir/d.txt").getName === "dir/d.txt"
       zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
     }
+
+    "Compress a Set[java.io.File] to zip" in {
+      val name = out + "set.zip"
+      val zip = filesWithDirectory.toSet.makeZip(name)
+      zip.getName === name
+      zip.getEntry("a.txt").getName === "a.txt"
+      zip.getEntry("dir/d.txt").getName === "dir/d.txt"
+      zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
+    }
+
+    "Compress an Array[java.io.File] to zip" in {
+      val name = out + "array.zip"
+      val zip = filesWithDirectory.toArray.makeZip(name)
+      zip.getName === name
+      zip.getEntry("a.txt").getName === "a.txt"
+      zip.getEntry("dir/d.txt").getName === "dir/d.txt"
+      zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
+    }
+
+    "Compress a Stream[java.io.File] to zip" in {
+      val name = out + "stream.zip"
+      val zip = filesWithDirectory.toStream.makeZip(name)
+      zip.getName === name
+      zip.getEntry("a.txt").getName === "a.txt"
+      zip.getEntry("dir/d.txt").getName === "dir/d.txt"
+      zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
+    }
   }
 }
