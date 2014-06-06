@@ -11,7 +11,7 @@ class ConverterZipperTest extends Specification with ZipperData {
   "Zipper" should {
 
     "Compress a List[java.io.File] to zip" in {
-      val name = out + "basic list.zip"
+      val name = out1 + "basic list.zip"
       val zip = files.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
@@ -20,7 +20,7 @@ class ConverterZipperTest extends Specification with ZipperData {
     }
 
     "Compress a List[java.io.File] with a directory to zip" in {
-      val name = out + "list with directory.zip"
+      val name = out1 + "list with directory.zip"
       val zip = filesWithDirectory.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
@@ -29,7 +29,7 @@ class ConverterZipperTest extends Specification with ZipperData {
     }
 
     "Compress a parallel List[java.io.File] to zip" in {
-      val name = out + "parallel list.zip"
+      val name = out1 + "parallel list.zip"
       val zip = files.par.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
@@ -38,7 +38,7 @@ class ConverterZipperTest extends Specification with ZipperData {
     }
 
     "Compress a parallel List[java.io.File] with a directory to zip" in {
-      val name = out + "parallel list with directory.zip"
+      val name = out1 + "parallel list with directory.zip"
       val zip = filesWithDirectory.par.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
@@ -47,7 +47,7 @@ class ConverterZipperTest extends Specification with ZipperData {
     }
 
     "Compress a Set[java.io.File] to zip" in {
-      val name = out + "set.zip"
+      val name = out1 + "set.zip"
       val zip = filesWithDirectory.toSet.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
@@ -56,7 +56,7 @@ class ConverterZipperTest extends Specification with ZipperData {
     }
 
     "Compress an Array[java.io.File] to zip" in {
-      val name = out + "array.zip"
+      val name = out1 + "array.zip"
       val zip = filesWithDirectory.toArray.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
@@ -65,7 +65,7 @@ class ConverterZipperTest extends Specification with ZipperData {
     }
 
     "Compress a Stream[java.io.File] to zip" in {
-      val name = out + "stream.zip"
+      val name = out1 + "stream.zip"
       val zip = filesWithDirectory.toStream.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
