@@ -44,7 +44,7 @@ object Converter {
       while (e.hasMoreElements) {
         files = extractEntry(e.nextElement, destination) :: files
       }
-      files
+      files.distinct
     }
 
     private def extractEntry(entry: ZipEntry, destination: String): File = {
@@ -65,7 +65,15 @@ object Converter {
         n = in.read(buffer)
       }
 
-      file
+      top(file,destination)
+    }
+
+    private def top(file:File, destination: String): File = {
+      if (file.getParent == destination) {
+        file
+      } else {
+        top(file.getParentFile,destination)
+      }
     }
   }
 }
