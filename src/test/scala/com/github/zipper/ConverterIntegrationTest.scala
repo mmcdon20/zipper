@@ -13,27 +13,42 @@ class ConverterIntegrationTest extends Specification with ZipperData with ZipDat
   "Integration" should {
 
     "Be able to zip and then unzip" in {
-      val name = out + "zthenu\\zip.zip"
+      val name = out + "zip then unzip\\zip.zip"
       val zip = filesWithDirectory.makeZip(name)
-      val unzip = zip.extractZip(out + "zthenu")
+      val unzip = zip.extractZip(out + "zip then unzip")
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
       zip.getEntry("dir/d.txt").getName === "dir/d.txt"
       zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
-      unzip.size === 5
-      unzip.exists(_.getName == "e.txt") === true
+      unzip.size === 4
+      unzip.exists(_.getName == "dir") === true
     }
 
     "Be able to unzip and then zip" in {
-      val name = out + "uthenz\\zip.zip"
-      val unzip = zip2.extractZip(out + "uthenz")
+      val name = out + "unzip then zip\\zip.zip"
+      val unzip = zip2.extractZip(out + "unzip then zip")
       val zip = unzip.makeZip(name)
       zip.getName === name
       zip.getEntry("a.txt").getName === "a.txt"
-      zip.getEntry("d.txt").getName === "d.txt"
-      zip.getEntry("e.txt").getName === "e.txt"
-      unzip.size === 5
-      unzip.exists(_.getName == "e.txt") === true
+      zip.getEntry("dir/d.txt").getName === "dir/d.txt"
+      zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
+      unzip.size === 4
+      unzip.exists(_.getName == "dir") === true
+    }
+
+    "Be able to unzip and then zip and then unzip" in {
+      val name = out + "unzip then zip then unzip\\zip.zip"
+      val unzip = zip2.extractZip(out + "unzip then zip then unzip")
+      val zip = unzip.makeZip(name)
+      val unzip2 = zip.extractZip(out + "unzip then zip then unzip\\unzip2")
+      zip.getName === name
+      zip.getEntry("a.txt").getName === "a.txt"
+      zip.getEntry("dir/d.txt").getName === "dir/d.txt"
+      zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
+      unzip.size === 4
+      unzip.exists(_.getName == "dir") === true
+      unzip2.size === 4
+      unzip2.exists(_.getName == "dir") === true
     }
   }
 }
