@@ -22,8 +22,8 @@ class ConverterZipTest extends Specification with ZipData {
 
     "Decompress a zip with folders" in {
       val unzip = zip2.extractZip(out2 + "zip2")
-      unzip.size === 5
-      unzip.exists(_.getName == "d.txt") === true
+      unzip.size === 4
+      unzip.exists(_.getName == "dir") === true
     }
   }
 }
