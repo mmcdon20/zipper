@@ -1,6 +1,6 @@
 package com.github.zipper
 
-import java.io.{FileOutputStream, File}
+import java.io.{InputStream, FileOutputStream, File}
 import java.util.zip.{ZipEntry, ZipOutputStream, ZipFile}
 
 object Converter {
@@ -11,6 +11,7 @@ object Converter {
   class Zipper [A <% FileCollection] (collection: A) extends Lockable with IO {
 
     def makeZip(name: String): ZipFile = {
+      new File(name).getParentFile.mkdirs()
       val zip = new ZipOutputStream(new FileOutputStream(name))
       compressFiles(zip,collection)
       zip.close()
@@ -36,9 +37,35 @@ object Converter {
     }
   }
 
-  class Zip(name: String) {
-    def extractZip(destination: String) = {
-      ???
+  class Zip(name: String) extends ZipFile(name) {
+    def extractZip(destination: String): List[File] = {
+      val e = entries
+      var files: List[File] = Nil
+      while (e.hasMoreElements) {
+        files = extractEntry(e.nextElement, destination) :: files
+      }
+      files
+    }
+
+    private def extractEntry(entry: ZipEntry, destination: String): File = {
+      val fileName = destination + "\\" + entry.getName
+      val file = new File(fileName)
+      file.getParentFile.mkdirs()
+
+      val in: InputStream = getInputStream(entry)
+      val out: FileOutputStream = new FileOutputStream(fileName)
+      val buffer = Array.ofDim[Byte](1024*4)
+      val size = entry.getSize
+      var count = 0L
+      var n = in.read(buffer)
+
+      while (n != -1 && count < size) {
+        out.write(buffer, 0, n)
+        count += n
+        n = in.read(buffer)
+      }
+
+      file
     }
   }
 }
