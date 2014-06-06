@@ -24,6 +24,7 @@ class ConverterZipTest extends Specification with ZipData {
       val unzip = zip2.extractZip(out2 + "zip2")
       unzip.size === 4
       unzip.exists(_.getName == "dir") === true
+      unzip.find(_.getName == "dir").get.listFiles.exists(_.getName == "d.txt") === true
     }
   }
 }
