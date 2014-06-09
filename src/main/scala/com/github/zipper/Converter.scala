@@ -22,13 +22,13 @@ object Converter {
       for (file <- files) {
         if (file.isDirectory) {
           compressFiles(zip,file.listFiles,s"$dir${file.getName}/")
-        } else lockingOperation {
+        } else {
           compressFile(zip,file,dir)
         }
       }
     }
 
-    private def compressFile(zip: ZipOutputStream, file: File, dir: String): Unit = {
+    private def compressFile(zip: ZipOutputStream, file: File, dir: String): Unit = lockingOperation {
       zip.putNextEntry(new ZipEntry(dir + file.getName))
       val in = getReader(file.getCanonicalPath)
       writeBytes(in,zip)
