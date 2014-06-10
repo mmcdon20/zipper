@@ -1,6 +1,6 @@
 package com.github.zipper
 
-import java.io.{InputStream, FileOutputStream, File}
+import java.io.{FileOutputStream, File}
 import java.util.zip.{ZipEntry, ZipOutputStream, ZipFile}
 
 object Converter {
@@ -52,12 +52,12 @@ object Converter {
       val file = new File(fileName)
       file.getParentFile.mkdirs()
 
-      val in: InputStream = getInputStream(entry)
-      val out: FileOutputStream = new FileOutputStream(fileName)
+      val in     = getInputStream(entry)
+      val out    = new FileOutputStream(fileName)
       val buffer = Array.ofDim[Byte](1024*4)
-      val size = entry.getSize
-      var count = 0L
-      var n = in.read(buffer)
+      val size   = entry.getSize
+      var count  = 0L
+      var n      = in.read(buffer)
 
       while (n != -1 && count < size) {
         out.write(buffer, 0, n)
