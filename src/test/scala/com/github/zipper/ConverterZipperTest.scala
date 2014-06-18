@@ -72,5 +72,15 @@ class ConverterZipperTest extends Specification with ZipperData {
       zip.getEntry("dir/d.txt").getName === "dir/d.txt"
       zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
     }
+
+    "Compress a java.util.ArrayList[java.io.File] to zip" in {
+      import scala.collection.JavaConversions._
+      val name = out1 + "arraylist.zip"
+      val zip = arrayList.makeZip(name)
+      zip.getName === name
+      zip.getEntry("a.txt").getName === "a.txt"
+      zip.getEntry("dir/d.txt").getName === "dir/d.txt"
+      zip.getEntry("dir/dir2/e.txt").getName === "dir/dir2/e.txt"
+    }
   }
 }

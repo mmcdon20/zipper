@@ -11,4 +11,10 @@ trait ZipperData {
   val direc = new File(dir1 + "dir")
   val files = file1 :: file2 :: file3 :: Nil
   val filesWithDirectory = direc :: files
+
+  val arrayList = new java.util.ArrayList[java.io.File]()
+  arrayList.add(file1)
+  arrayList.add(file2)
+  arrayList.add(file3)
+  arrayList.add(direc)
 }
