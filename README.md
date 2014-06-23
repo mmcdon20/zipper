@@ -27,6 +27,21 @@ val files: List[File] = new File("a.txt") ::
 val zip: ZipFile = files.makeZip("zip_example.zip")                        
 ```
 
+Using Java collections such as ArrayList is also possible with the JavaConversions package.
+
+```scala
+import scala.collection.JavaConversions._
+
+val files: ArrayList[File] = new ArrayList[File]()
+
+files.add(new File("a.txt"))
+files.add(new File("b.txt"))
+files.add(new File("c.txt"))
+files.add(new File("dir"))
+
+val zip: ZipFile = files.makeZip("zip_example.zip")                        
+```
+
 ### Extract a zip file
 
 Extracting a zip takes a destination path and returns a List[File].
