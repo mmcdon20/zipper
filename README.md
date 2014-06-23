@@ -30,6 +30,7 @@ val zip: ZipFile = files.makeZip("zip_example.zip")
 Using Java collections such as ArrayList is also possible with the JavaConversions package.
 
 ```scala
+import java.util.ArrayList
 import scala.collection.JavaConversions._
 
 val files: ArrayList[File] = new ArrayList[File]()
